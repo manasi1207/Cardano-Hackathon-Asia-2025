@@ -1,0 +1,8 @@
+{
+  "version": 3,
+  "file": "index.cjs",
+  "sourceRoot": "../../",
+  "sources": ["backend/midnight/aura.compact"],
+  "names": [],
+  "mappings": ";;;;;;;;;;;;;;;;;;;;;;;EAAA;;;;;;;;;;;;GAAC;EAAD;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;GAAC;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;"
+}

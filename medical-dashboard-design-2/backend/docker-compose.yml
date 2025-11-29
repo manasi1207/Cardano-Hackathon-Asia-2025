@@ -1,0 +1,51 @@
+version: '3.8'
+
+services:
+  # Masu Network Node Service
+  masu-node:
+    image: masuminetwork/node
+    container_name: masu-node
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    networks:
+      - app-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  # Midnight Network Proof Server
+  proof-server:
+    image: midnightnetwork/proof-server
+    container_name: proof-server
+    ports:
+      - "6300:6300"
+    restart: unless-stopped
+    networks:
+      - app-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"  # Added missing quote
+
+  # Frontend Service (Optional - if you want to containerize it)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: medical-dashboard-frontend
+    ports:
+      - "3001:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://host.docker.internal:8000
+      - NEXT_PUBLIC_MASU_NODE_URL=http://masu-node:3000
+      - NEXT_PUBLIC_PROOF_SERVER_URL=http://proof-server:6300
+    depends_on:
+      - masu-node
+      - proof-server
+    restart: unless-stopped
+    networks:
+      - app-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+networks:
+  app-network:
+    driver: bridge
